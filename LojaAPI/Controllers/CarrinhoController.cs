@@ -12,29 +12,31 @@ namespace LojaAPI.Controllers
 {
     public class CarrinhoController : ApiController
     {
+
+
         public HttpResponseMessage Get(int id)
         {
             try
             {
-                CarrinhoDAO dao = new CarrinhoDAO();
-                Carrinho carrinho = dao.Busca(id);
+                var dao = new CarrinhoDAO();
+                var carrinho = dao.Busca(id);
                 return Request.CreateResponse(HttpStatusCode.OK, carrinho);
             }
             catch (KeyNotFoundException)
             {
-                string mensagem = $"O carrinho com o id {id} não foi encontrado.";
-                HttpError error = new HttpError(mensagem);
+                var mensagem = $"O carrinho com o id {id} não foi encontrado.";
+                var error = new HttpError(mensagem);
                 return Request.CreateResponse(HttpStatusCode.NotFound, error);
             }
         }
 
         public HttpResponseMessage Post([FromBody] Carrinho carrinho)
         {
-            CarrinhoDAO dao = new CarrinhoDAO();
+            var dao = new CarrinhoDAO();
             dao.Adiciona(carrinho);
 
-            HttpResponseMessage response =  Request.CreateResponse(HttpStatusCode.Created);
-            string location = Url.Link("DefaultApi", new { controller = "carrinho", id = carrinho.Id });
+            var response =  Request.CreateResponse(HttpStatusCode.Created);
+            var location = Url.Link("DefaultApi", new { controller = "carrinho", id = carrinho.Id });
 
             response.Headers.Location = new Uri(location);
 
@@ -45,8 +47,8 @@ namespace LojaAPI.Controllers
         [Route("api/carrinho/{idCarrinho}/produto/{idProduto}")]
         public HttpResponseMessage Delete([FromUri] int idCarrinho, [FromUri] int idProduto)
         {
-            CarrinhoDAO dao = new CarrinhoDAO();
-            Carrinho carrinho = dao.Busca(idCarrinho);
+            var dao = new CarrinhoDAO();
+            var carrinho = dao.Busca(idCarrinho);
             carrinho.Remove(idProduto);
 
             return Request.CreateResponse(HttpStatusCode.OK);
