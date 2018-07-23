@@ -1,5 +1,6 @@
-﻿using LojaAPI.DAO;
-using LojaAPI.Models;
+﻿using Loja.DAO;
+using Loja.Models;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,11 +12,11 @@ namespace LojaAPI.Controllers
 {
     public class CarrinhoController : ApiController
     {
-        public string Get(int id)
+        public Carrinho Get(int id)
         {
             CarrinhoDAO dao = new CarrinhoDAO();
             Carrinho carrinho = dao.Busca(id);
-            return carrinho.ToXml();
+            return carrinho;
         }
     }
 }
