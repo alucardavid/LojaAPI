@@ -18,5 +18,13 @@ namespace LojaAPI.Controllers
             Carrinho carrinho = dao.Busca(id);
             return carrinho;
         }
+
+        public string Post(Carrinho carrinho)
+        {
+            CarrinhoDAO dao = new CarrinhoDAO();
+            dao.Adiciona(carrinho);
+
+            return "Sucesso.";
+        }
     }
 }
