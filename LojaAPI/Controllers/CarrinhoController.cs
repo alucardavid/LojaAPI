@@ -14,7 +14,6 @@ namespace LojaAPI.Controllers
     {
         public HttpResponseMessage Get(int id)
         {
-
             try
             {
                 CarrinhoDAO dao = new CarrinhoDAO();
@@ -26,7 +25,6 @@ namespace LojaAPI.Controllers
                 string mensagem = $"O carrinho com o id {id} não foi encontrado.";
                 HttpError error = new HttpError(mensagem);
                 return Request.CreateResponse(HttpStatusCode.NotFound, error);
-
             }
         }
 
@@ -41,6 +39,17 @@ namespace LojaAPI.Controllers
             response.Headers.Location = new Uri(location);
 
             return response;
+
+        }
+
+        [Route("api/carrinho/{idCarrinho}/produto/{idProduto}")]
+        public HttpResponseMessage Delete([FromUri] int idCarrinho, [FromUri] int idProduto)
+        {
+            CarrinhoDAO dao = new CarrinhoDAO();
+            Carrinho carrinho = dao.Busca(idCarrinho);
+            carrinho.Remove(idProduto);
+
+            return Request.CreateResponse(HttpStatusCode.OK);
 
         }
     }
